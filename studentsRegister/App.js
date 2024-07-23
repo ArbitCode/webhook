@@ -125,27 +125,25 @@ app.post('/registerStudent',
             let webhookURL = ""
             for (let i = 0; i < schoolDetails.webhookDetails.length; i++)
             {
-                if (schoolDetails.webhookDetails[i].eventName === "newStudentAdd")
-                {
+                if (schoolDetails.webhookDetails[i].eventName === "newStudentAdd") {
                     webhookURL = schoolDetails.webhookDetails[i].eventEndpointURL
-                }
-                if (webhookURL != null && webhookURL.length  > 0)
-                {
-                    let result = await axios.post(
-                        webhookURL, 
-                        {
-                            name: studentDetails.name,
-                            age: studentDetails.age,
-                            studentId: studentDetails.studentId,
-                            mobile : studentDetails.mobile
-                        },
-                        {
-                        headers: {
-                            'content-type': 'application/json'
-                        }
+                    if (webhookURL != null && webhookURL.length > 0) {
+                        let result = await axios.post(
+                            webhookURL,
+                            {
+                                name: studentDetails.name,
+                                age: studentDetails.age,
+                                studentId: studentDetails.studentId,
+                                mobile: studentDetails.mobile
+                            },
+                            {
+                                headers: {
+                                    'content-type': 'application/json'
+                                }
+                            }
+                        );
+                        console.log("webhook data sent: " + result.data.result);
                     }
-                    );
-                    console.log("webhook data sent: " + result.data.result);
                 }
             }
         }
